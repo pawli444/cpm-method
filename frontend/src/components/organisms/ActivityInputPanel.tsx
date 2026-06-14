@@ -5,6 +5,8 @@ interface ActivityInputPanelProps {
   activities: ActivityInput[]
   onChange: (next: ActivityInput[]) => void
   onResetToMock: () => void
+  onExportCSV: () => void
+  onImportCSV: () => void
 }
 
 const emptyActivity: ActivityInput = {
@@ -18,6 +20,8 @@ const ActivityInputPanel = ({
   activities,
   onChange,
   onResetToMock,
+  onExportCSV,
+  onImportCSV,
 }: ActivityInputPanelProps) => {
   const [draft, setDraft] = useState<ActivityInput>(emptyActivity)
 
@@ -25,30 +29,15 @@ const ActivityInputPanel = ({
 
   const updateActivity = (id: string, key: keyof ActivityInput, value: string | number) => {
     const next = activities.map((activity) => {
-      if (activity.id !== id) {
-        return activity
-      }
-
-      if (key === 'duration') {
-        return { ...activity, duration: Number(value) || 1 }
-      }
-
-      if (key === 'name') {
-        return { ...activity, name: String(value) }
-      }
-
+      if (activity.id !== id) return activity
+      if (key === 'duration') return { ...activity, duration: Number(value) || 1 }
+      if (key === 'name') return { ...activity, name: String(value) }
       if (key === 'predecessors') {
-        const predecessors = String(value)
-          .split(',')
-          .map((item) => item.trim())
-          .filter(Boolean)
-
+        const predecessors = String(value).split(',').map((item) => item.trim()).filter(Boolean)
         return { ...activity, predecessors }
       }
-
       return activity
     })
-
     onChange(next)
   }
 
@@ -59,24 +48,18 @@ const ActivityInputPanel = ({
         ...activity,
         predecessors: activity.predecessors.filter((predecessor) => predecessor !== id),
       }))
-
     onChange(next)
   }
 
   const addActivity = () => {
     const normalizedId = draft.id.trim().toUpperCase()
-
-    if (!normalizedId || idSet.has(normalizedId)) {
-      return
-    }
-
+    if (!normalizedId || idSet.has(normalizedId)) return
     const next: ActivityInput = {
       id: normalizedId,
       name: draft.name.trim() || `Czynnosc ${normalizedId}`,
       duration: Math.max(1, Number(draft.duration) || 1),
       predecessors: draft.predecessors,
     }
-
     onChange([...activities, next])
     setDraft(emptyActivity)
   }
@@ -105,7 +88,7 @@ const ActivityInputPanel = ({
                 <td>
                   <input
                     value={activity.name}
-                    onChange={(event) => updateActivity(activity.id, 'name', event.target.value)}
+                    onChange={(e) => updateActivity(activity.id, 'name', e.target.value)}
                   />
                 </td>
                 <td>
@@ -113,22 +96,19 @@ const ActivityInputPanel = ({
                     type="number"
                     min={1}
                     value={activity.duration}
-                    onChange={(event) =>
-                      updateActivity(activity.id, 'duration', Number(event.target.value))
-                    }
+                    onChange={(e) => updateActivity(activity.id, 'duration', Number(e.target.value))}
                   />
                 </td>
                 <td>
                   <input
                     value={activity.predecessors.join(', ')}
-                    onChange={(event) =>
-                      updateActivity(activity.id, 'predecessors', event.target.value)
-                    }
+                    onChange={(e) => updateActivity(activity.id, 'predecessors', e.target.value)}
                   />
                 </td>
                 <td>
                   <button type="button" className="ghost-btn" onClick={() => removeActivity(activity.id)}>
-                    Usun
+                   
+                 Usun
                   </button>
                 </td>
               </tr>
@@ -142,32 +122,27 @@ const ActivityInputPanel = ({
           placeholder="ID"
           value={draft.id}
           maxLength={5}
-          onChange={(event) => setDraft((prev) => ({ ...prev, id: event.target.value }))}
+          onChange={(e) => setDraft((prev) => ({ ...prev, id: e.target.value }))}
         />
         <input
           placeholder="Nazwa"
           value={draft.name}
-          onChange={(event) => setDraft((prev) => ({ ...prev, name: event.target.value }))}
+          onChange={(e) => setDraft((prev) => ({ ...prev, name: e.target.value }))}
         />
         <input
           type="number"
           min={1}
           placeholder="Czas"
           value={draft.duration}
-          onChange={(event) =>
-            setDraft((prev) => ({ ...prev, duration: Number(event.target.value) || 1 }))
-          }
+          onChange={(e) => setDraft((prev) => ({ ...prev, duration: Number(e.target.value) || 1 }))}
         />
         <input
           placeholder="Poprzednicy: np. A,B"
           value={draft.predecessors.join(',')}
-          onChange={(event) =>
+          onChange={(e) =>
             setDraft((prev) => ({
               ...prev,
-              predecessors: event.target.value
-                .split(',')
-                .map((item) => item.trim().toUpperCase())
-                .filter(Boolean),
+              predecessors: e.target.value.split(',').map((item) => item.trim().toUpperCase()).filter(Boolean),
             }))
           }
         />
@@ -175,7 +150,13 @@ const ActivityInputPanel = ({
           Dodaj czynnosc
         </button>
         <button type="button" className="ghost-btn" onClick={onResetToMock}>
-          Wczytaj mock data
+          Wczytaj mock
+        </button>
+        <button type="button" className="ghost-btn" onClick={onImportCSV}>
+          Importuj CSV
+        </button>
+        <button type="button" className="ghost-btn" onClick={() => { console.log('EKSPORT KLIK'); onExportCSV(); }}>
+          Eksportuj CSV
         </button>
       </div>
     </div>

@@ -37,6 +37,7 @@ body {
   min-height: 100vh;
 }
 
+/* ── Shell ─────────────────────────────────────────────── */
 .app-shell {
   width: min(1280px, 100% - 32px);
   margin: 24px auto;
@@ -47,6 +48,7 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
+/* ── Hero header ────────────────────────────────────────── */
 .hero-header {
   background: linear-gradient(120deg, #fff 0%, #fff3ee 55%, #f9f2de 100%);
   border: 1px solid var(--line);
@@ -68,6 +70,41 @@ body {
   background: rgba(239, 91, 42, 0.12);
 }
 
+.hero-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.user-email {
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-family: 'Space Mono', monospace;
+}
+
+.layout-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.saved-btn {
+  border-color: var(--asap) !important;
+  color: var(--asap) !important;
+}
+
 .kicker {
   margin: 0;
   display: inline-block;
@@ -82,10 +119,7 @@ body {
   padding: 6px 10px;
 }
 
-h1,
-h2,
-h3,
-p {
+h1, h2, h3, p {
   margin: 0;
 }
 
@@ -108,6 +142,7 @@ h2 {
   color: var(--ink-soft);
 }
 
+/* ── Content grid ───────────────────────────────────────── */
 .content-grid {
   margin-top: 18px;
   display: grid;
@@ -172,6 +207,7 @@ h2 {
   font-size: 14px;
 }
 
+/* ── Table ──────────────────────────────────────────────── */
 .table-wrap {
   overflow-x: auto;
   border: 1px solid #e8e2d8;
@@ -184,8 +220,7 @@ table {
   min-width: 900px;
 }
 
-th,
-td {
+th, td {
   text-align: left;
   border-bottom: 1px solid #eee8dc;
   padding: 10px;
@@ -216,19 +251,17 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-.inline-form {
-  display: grid;
-  grid-template-columns: 90px 1fr 110px 1fr auto auto;
-  gap: 8px;
-}
-
+/* ── Buttons ────────────────────────────────────────────── */
 .primary-btn,
-.ghost-btn {
+.ghost-btn,
+.danger-btn {
   border-radius: 10px;
   border: 1px solid transparent;
   padding: 10px 12px;
   font-weight: 700;
   cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -243,18 +276,58 @@ button:focus-visible {
   color: var(--ink);
 }
 
+.danger-btn {
+  background: #fff0f0;
+  border-color: #f5c4c4;
+  color: var(--critical);
+}
+
 .primary-btn:hover,
-.ghost-btn:hover {
+.ghost-btn:hover,
+.danger-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
+.primary-btn:disabled,
+.ghost-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ── Inline form ────────────────────────────────────────── */
+.inline-form {
+  display: grid;
+  grid-template-columns: 90px 1fr 110px 1fr auto auto auto auto;
+  gap: 8px;
+}
+
+.new-project-form {
+  grid-template-columns: 1fr auto;
+}
+
+/* ── Error / empty ──────────────────────────────────────── */
 .error-list {
   margin: 0;
   padding-left: 20px;
   color: #9f1b1b;
 }
 
+.empty-state {
+  padding: 32px 0;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+.empty-state p {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* ── Critical path ──────────────────────────────────────── */
 .critical-panel {
   display: grid;
   gap: 10px;
@@ -270,6 +343,7 @@ button:focus-visible {
   color: #8b1b14;
 }
 
+/* ── Graph ──────────────────────────────────────────────── */
 .graph-wrap {
   border: 1px solid #e6dece;
   border-radius: var(--radius-lg);
@@ -311,6 +385,7 @@ button:focus-visible {
   fill: #1f1d19;
 }
 
+/* ── Gantt ──────────────────────────────────────────────── */
 .gantt-wrap {
   display: grid;
   gap: 8px;
@@ -365,17 +440,124 @@ button:focus-visible {
   background: var(--alap);
 }
 
-@keyframes rise-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ── Projects list ──────────────────────────────────────── */
+.projects-list {
+  display: grid;
+  gap: 10px;
 }
 
+.project-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #ede6d8;
+  border-radius: var(--radius-lg);
+  background: #fdfaf5;
+  transition: box-shadow 0.2s ease;
+}
+
+.project-row:hover {
+  box-shadow: 0 4px 16px rgba(54, 45, 20, 0.07);
+}
+
+.project-info {
+  display: grid;
+  gap: 4px;
+}
+
+.project-name {
+  font-size: 16px;
+}
+
+.project-date {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-family: 'Space Mono', monospace;
+}
+
+.project-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ── Auth pages ─────────────────────────────────────────── */
+.auth-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-card {
+  width: min(480px, 100% - 32px);
+  margin: 24px auto;
+}
+
+.auth-form {
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.auth-field {
+  display: grid;
+  gap: 6px;
+}
+
+.auth-field label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--ink-soft);
+}
+
+.auth-field input {
+  width: 100%;
+}
+
+.auth-submit-btn {
+  width: 100%;
+  padding: 13px;
+  font-size: 15px;
+}
+
+.auth-error {
+  background: #fff0f0;
+  border: 1px solid #f5c4c4;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  color: var(--critical);
+  font-size: 14px;
+}
+
+.auth-switch {
+  text-align: center;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.auth-link {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Animations ─────────────────────────────────────────── */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 1040px) {
   .app-shell {
     width: calc(100% - 18px);
@@ -389,11 +571,20 @@ button:focus-visible {
     border-radius: 18px;
   }
 
+  .hero-header-row {
+    flex-direction: column;
+  }
+
   .metrics-row {
     grid-template-columns: 1fr;
   }
 
   .inline-form {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .project-row {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
