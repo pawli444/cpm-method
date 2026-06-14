@@ -155,7 +155,7 @@ const ActivityInputPanel = ({
         <button type="button" className="ghost-btn" onClick={onImportCSV}>
           Importuj CSV
         </button>
-        <button type="button" className="ghost-btn" onClick={() => { console.log('EKSPORT KLIK'); onExportCSV(); }}>
+        <button type="button" className="ghost-btn" onClick={onExportCSV}>
           Eksportuj CSV
         </button>
       </div>
