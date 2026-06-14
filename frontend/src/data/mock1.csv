@@ -1,0 +1,13 @@
+ID,Nazwa,Czas,Poprzednicy
+A,Projekt architektoniczny,5,
+B,Pozwolenie na budowe,10,A
+C,Wyrownanie terenu,3,A
+D,Fundamenty,8,B;C
+E,Sciany nosne,6,D
+F,Dach,5,E
+G,Instalacja elektryczna,4,E
+H,Instalacja hydrauliczna,4,E
+I,Tynki wewnetrzne,5,F;G;H
+J,Podlogi,4,I
+K,Malowanie,3,J
+L,Odbiory i dokumentacja,2,K
