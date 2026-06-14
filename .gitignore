@@ -1,0 +1,20 @@
+# Node.js i paczki
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Środowisko
+.env
+
+# Buildy i logi
+dist/
+build/
+*.log
+
+# Pliki systemowe i IDE
+.DS_Store
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj

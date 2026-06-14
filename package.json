@@ -1,0 +1,17 @@
+{
+  "name": "CPM",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true,
+  "dependencies": {
+    "cytoscape": "^3.34.0",
+    "react-cytoscapejs": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/cytoscape": "^3.21.9"
+  }
+}
