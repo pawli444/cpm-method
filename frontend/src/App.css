@@ -186,6 +186,7 @@ h2 {
   border-radius: var(--radius-xl);
   padding: 22px;
   animation: rise-in 0.55s ease-out;
+  overflow: hidden;
 }
 
 .section-header {
